@@ -1,0 +1,86 @@
+body {
+      font-family: Arial, sans-serif;
+      background-color: lightyellow;
+      color: black;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    .header {
+      background-color: darkblue;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .header h1 {
+      margin: 5px;
+      font-size: 32px;
+    }
+    .header h3 {
+      margin: 5px;
+      font-weight: normal;
+      font-size: 20px;
+    }
+    .header p {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    hr {
+      border: none;
+      height: 3px;
+      background-color: green;
+      margin: 20px 0;
+    }
+    hr.black {
+      background-color: black;
+      height: 4px;
+    }
+
+    h2 {
+      color: darkred;
+      margin-top: 0;
+    }
+
+    ul {
+      list-style: square;
+      padding-left: 20px;
+    }
+    ul li {
+      margin: 5px 0;
+    }
+
+    /* Education Table */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    table th, table td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+    table th {
+      background-color: lightgray;
+    }
+
+    /* Personal Details Table */
+    .details td {
+      padding: 6px 10px;
+    }
+    .details td:first-child {
+      color: brown;
+      font-weight: bold;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      background-color: #f0f0f0;
+      padding: 10px;
+      font-size: 14px;
+      color: gray;
+      margin-top: 20px;
+    }
