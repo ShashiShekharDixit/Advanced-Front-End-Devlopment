@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f2f5;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      color: white;
+      padding: 12px 20px;
+    }
+
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #ff5722;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-area input {
+      padding: 6px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .input-area button {
+      background: #ff5722;
+      border: none;
+      padding: 6px 12px;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background: #e64a19;
+    }
+
+    .hero {
+      padding: 20px;
+    }
+
+    .hero h2 {
+      text-align: center;
+      color: #ff5722;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    li {
+      background: #fbe9e7;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    li button {
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+
+    li button:first-child {
+      background: #03a9f4;
+      color: white;
+    }
+
+    li button:first-child:hover {
+      background: #0288d1;
+    }
+
+    li button:last-child {
+      background: #f44336;
+      color: white;
+    }
+
+    li button:last-child:hover {
+      background: #d32f2f;
+    }
+
+    li input {
+      flex: 1;
+      padding: 4px 6px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Todo List</h1>
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="Enter task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h2>My Tasks</h2>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    let tasks = [];
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+      if (taskText === "") return;
+
+      const task = { id: Date.now(), text: taskText, editing: false };
+      tasks.push(task);
+      input.value = "";
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+
+        if (task.editing) {
+          // Editable input for updating
+          const editInput = document.createElement("input");
+          editInput.value = task.text;
+
+          const saveBtn = document.createElement("button");
+          saveBtn.textContent = "Save";
+          saveBtn.onclick = () => saveTask(task.id, editInput.value);
+
+          const cancelBtn = document.createElement("button");
+          cancelBtn.textContent = "Cancel";
+          cancelBtn.onclick = () => cancelEdit(task.id);
+
+          li.appendChild(editInput);
+          li.appendChild(saveBtn);
+          li.appendChild(cancelBtn);
+        } else {
+          const span = document.createElement("span");
+          span.textContent = task.text;
+
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.onclick = () => enableEdit(task.id);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.onclick = () => deleteTask(task.id);
+
+          li.appendChild(span);
+          li.appendChild(editBtn);
+          li.appendChild(deleteBtn);
+        }
+
+        taskList.appendChild(li);
+      });
+    }
+
+    function enableEdit(id) {
+      tasks = tasks.map(task => 
+        task.id === id ? { ...task, editing: true } : task
+      );
+      renderTasks();
+    }
+
+    function saveTask(id, newText) {
+      tasks = tasks.map(task => 
+        task.id === id ? { ...task, text: newText, editing: false } : task
+      );
+      renderTasks();
+    }
+
+    function cancelEdit(id) {
+      tasks = tasks.map(task => 
+        task.id === id ? { ...task, editing: false } : task
+      );
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+      renderTasks();
+    }
+  </script>
+</body>
+</html>
